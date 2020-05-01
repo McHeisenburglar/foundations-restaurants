@@ -33,7 +33,7 @@ db_connection = sqlite3.connect('restaurants.db')
 # create a database cursor object, which allows us to perform SQL on the database. 
 db_cursor = db_connection.cursor()
 
-n_id = int(input("Which neighborhood? "))
+n_id = int(input("Which neighborhood? ") or 1)
 
 # run a first query 
 db_cursor.execute(f"""
@@ -53,6 +53,17 @@ print(list_restaurants)
 print(str(n_name))
 
 db_connection.close()
+
+js_script = """
+<script>
+	function addItem() {
+		var newItem = prompt('What restaurant would you like?');
+		var listItem = document.createElement("LI");
+		listItem.textContent = newItem;
+		document.querySelector('ul').appendChild(listItem);
+	}
+</script>
+"""
 
 html_list = ""
 for restaurant in list_restaurants:
@@ -74,7 +85,9 @@ f_html.write(f"""<!DOCTYPE html>
 		<ul>
 			{html_list}
 		</ul>
+		<button onclick="addItem()">Add Item</item>
 	</div>
+	{js_script}
 </body>
 </html>""")
 f_html.close()
